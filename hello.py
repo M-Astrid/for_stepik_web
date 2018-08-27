@@ -1,4 +1,4 @@
-from cgi import parse_qs
+from cgi import parse_qsl
 
 def app(env, start_response):
     status = '200 OK'
