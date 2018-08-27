@@ -1,3 +1,5 @@
+bind='0.0.0.0:8080'
+
 from cgi import parse_qsl
 
 def app(env, start_response):
