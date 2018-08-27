@@ -3,7 +3,7 @@ from cgi import parse_qsl
 def app(env, start_response):
     status = '200 OK'
     headers = [('Content-Type', 'text/plain')]
-    qs = parse_qsl(env['QUERY_STRING'], encoding='utf-8') 
+    qs = parse_qsl(env['QUERY_STRING']) 
 
     body = ''
     for key, value in qs:
