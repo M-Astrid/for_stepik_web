@@ -1,15 +1,9 @@
 bind='0.0.0.0:8080'
 
-from cgi import parse_qsl
-
 def app(env, start_response):
     status = '200 OK'
     headers = [('Content-Type', 'text/plain')]
-    qs = parse_qsl(env['QUERY_STRING']) 
-
-    body = ''
-    for key, value in qs:
-        body += key + '=' + value + '\r\n'
+    body = [bytes(i + '\n', 'ascii') for i in env['QUERY_STRING'].split('&')] 
 
     start_response(status, headers)  
     return body
