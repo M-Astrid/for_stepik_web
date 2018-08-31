@@ -27,5 +27,5 @@ class Answer(models.Model):
 
     text = models.TextField
     added_at = models.DateField(blank = True, auto_now_add=True)
-    question = ForignKeyField('Question')
-    author = models.ForiegnKeyField(User)
+    question = ForeignKeyField('Question')
+    author = models.ForeignKeyField(User)
