@@ -29,3 +29,6 @@ class Answer(models.Model):
     added_at = models.DateField(blank=True, auto_now_add=True)
     question = models.ForeignKey(Question, null=True, on_delete=models.CASCADE)
     author = models.ForeignKey(User, null=True, on_delete=models.DO_NOTHING)
+    
+    def __str__(self):
+        return self.text
