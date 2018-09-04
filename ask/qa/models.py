@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class QuestionManager(models.Manager):
     def new(self):
-        return self.order_by('-added_at')
+        return self.order_by('-id')
     def popular(self):
         return self.order_by('-rating')
 
@@ -16,6 +16,12 @@ class Question(models.Model):
     rating = models.IntegerField(default = 0)
     author = models.ForeignKey(User, null=True, on_delete=models.DO_NOTHING)
     likes = models.ManyToManyField(User, related_name='likes_set')
+
+    def __str__(self):
+        return self.title
+
+    def get_url(self):
+        return "/question/{}/".format(self.id)
 
 class Answer(models.Model):
 

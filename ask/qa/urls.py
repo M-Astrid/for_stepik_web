@@ -5,5 +5,5 @@ from . import views
 app_name = 'qa'
 
 urlpatterns = [
-    url(r'^$', views.test, name='test'),
+    url(r'^popular/', views.test, name='test'),
 ]
