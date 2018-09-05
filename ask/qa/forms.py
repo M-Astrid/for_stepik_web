@@ -3,21 +3,11 @@ from django.shortcuts import get_object_or_404
 
 from qa.models import Question, Answer
 
-class AskForm(forms.ModelForm):
-    class Meta:
-        model = Question
-        fields = ['title', 'text']
-
-
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if title.strip() == '':
-            raise forms.ValidationError(u'Title is empty', code='invalid')
-        return title
-
-    def clean_text(self):
+class AskForm(forms.Form):
+    title = forms.CharField(max_length=100)
+    text = forms.CharField(widget=forms.Textarea)
+    def clean(self):
         pass
-
     def save(self):
         question = Question(**self.cleaned_data)
         question.save()

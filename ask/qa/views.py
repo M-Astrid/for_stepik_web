@@ -15,7 +15,7 @@ def go_ask(request):
             return HttpResponseRedirect(url)
     else:
         form = AskForm()
-    return render(request, 'go_ask.http', {'form': form})
+    return render(request, 'go_ask.html', {'form': form})
 
 def main(request):
     questions = Question.objects.all().order_by('-id')
@@ -67,7 +67,7 @@ def question(request, num,):
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save()
-            url = q.get_url
+            url = q.get_url()
             return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question':q.id})
