@@ -2,8 +2,8 @@ from django.conf.urls import url
 
 from . import views
 
-app_name = 'qa'
+app_name = 'qa_app'
 
 urlpatterns = [
-    url(r'^popular/', views.test, name='test'),
+    url(r'^$', views.test, name='test'),
 ]
