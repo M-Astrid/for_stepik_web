@@ -1,4 +1,5 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 
 from qa.models import Question, Answer
 
@@ -15,10 +16,7 @@ class AskForm(forms.ModelForm):
         return title
 
     def clean_text(self):
-        text = self.cleaned_data['text']
-        if text.strip() == '':
-            raise forms.ValidationError(u'Text is empty', code='invalid')
-        return text
+        pass
 
     def save(self):
         question = Question(**self.cleaned_data)
