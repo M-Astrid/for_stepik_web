@@ -5,12 +5,13 @@
     <title>{{ question }}</title>
 </head>
 <body>
+    <div> Автор вопроса: {{ question.author }}</div>
     <h1>{{ question }}</h1>
     <div>{{ question.text }}</div>
     <hr>
     <ul>
     {% for answer in question.answer_set.all %}
-        <li>{{ answer }}</li>
+        <li>{{ answer.author }}: {{ answer }}</li>
     {% endfor %}
     </ul>
     <hr>
@@ -19,7 +20,7 @@
 {% csrf_token %}
 {{ form.as_p }}
         </fieldset>
-        <button type="submit">Ответить</button>
+        <button type="submit">Reply</button>
     </form>
     <hr>
 </body>
