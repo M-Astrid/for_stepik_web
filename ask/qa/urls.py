@@ -6,7 +6,7 @@ app_name = 'qa'
 
 urlpatterns = [
     url(r'^$', views.main),
-    url(r'^login/', views.LoginFormView.as_view()),
+    url(r'^login/', views.login_view,
     url(r'^signup/', views.signup, name='signup'),
     url(r'^question/(?P<num>[0-9]+)/', views.question),
     url(r'^ask/', views.go_ask),

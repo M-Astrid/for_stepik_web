@@ -1,34 +1,50 @@
 from django.shortcuts import render
-from django.views.generic.edit import FormView
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-from .models import Question, Answer
-from .forms import AskForm, AnswerForm, SignUpForm
+from qa.models import Question, Answer
+from qa.forms import AskForm, AnswerForm, LoginForm, SignupForm
 
-class LoginFormView(FormView):
-    form_class = AuthenticationForm
-    template_name = "signup.html"
-    success_url = "/"
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            print(username, password)
+            user = authenticate(username=username, password=password)
+            print(type(user))
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form,
+                                          'user': request.user,
+                                          'session': request.session, })
 
-    def form_valid(self, form):
-        self.user = form.get_user()
-        login(self.request, self.user)
-        return super(LoginFormView, self).form_valid(form)
 
 def signup(request):
-    form = SignUpForm()
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
+    if request.method == "POST":
+        form = SignupForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            username = form.cleaned_data["username"]
+            password = form.raw_passeord
+            user = authenticate(username=username, password=password)
+            print(type(user))
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
             return HttpResponseRedirect('/')
-    args = {}
-    args['form'] = form
-    return render(request, 'signup.html', args)
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form,
+                                           'user': request.user,
+'session': request.session, })
 
 
 def main(request):
